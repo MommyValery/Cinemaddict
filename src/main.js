@@ -8,7 +8,7 @@ import ProfilePresenter from './presenter/profile.js';
 import Api from './api.js';
 import { UpdateType } from './const.js';
 
-const END_POINT = 'https://14.ecmascript.htmlacademy.pro/cinemaddict';
+const END_POINT = 'https://17.ecmascript.htmlacademy.pro/cinemaddict';
 const AUTHORIZATION = 'Basic er883jdzbdw';
 
 const filmsModel = new FilmsModel();
