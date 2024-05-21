@@ -52,3 +52,13 @@ export const sortFilmRatingDown = (a, b) => {
     return b.filmInfo.rating - a.filmInfo.rating;
   };
 
+export const sortFilmDefault = (a, b) => {
+    const weight = getWeightForNull(a.filmInfo.rating, b.filmInfo.rating);
+  
+      if (weight !== null) {
+          return weight;
+      };
+        
+      return a.id - b.id;
+    };
+  

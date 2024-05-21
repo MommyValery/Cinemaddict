@@ -8,12 +8,9 @@ import { filter } from '../utils/filter.js';
 import MoviePresenter from './movie.js';
 import SortView from '../view/sort.js';
 import { SortType, UserAction, UpdateType } from '../const.js';
-import { sortFilmDateDown, sortFilmRatingDown } from '../utils/card.js';
+import { sortFilmDateDown, sortFilmDefault, sortFilmRatingDown } from '../utils/card.js';
 import StatisticsView from '../view/statistics.js';
 import LoadingView from '../view/loading.js';
-
-// сортировка при тыке на дефолт ничего не возращает
-// статс при переключении на today
 
 
 const FILMS_COUNT = 20;
@@ -84,16 +81,16 @@ export default class MovieList {
 
 
   _getFilms() {
-    const films = this._filmsModel.getFilms();
+      const films = this._filmsModel.getFilms();
     const filterType = this._filterModel.getFilter();
-    const filteredFilms = filter[filterType](films);
+      const filteredFilms = filter[filterType](films);
     switch (this._currentSortType) {
       case SortType.DATE_DOWN:
         return filteredFilms.sort(sortFilmDateDown);
       case SortType.RATING_DOWN:
         return filteredFilms.sort(sortFilmRatingDown);
       case SortType.DEFAULT:
-        return filteredFilms;
+        return filteredFilms.sort(sortFilmDefault);
     }
   }
 

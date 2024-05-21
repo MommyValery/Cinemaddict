@@ -4,10 +4,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { StatsDate } from "../const.js";
 import { CHART_BAR, getTotalDuration, getTopGenre, getGenresStatistics, filterToFilterMap } from "../utils/statistics.js";
 import { convertMinutesToHours } from "../utils/card.js";
-import dayjs from "dayjs";
 
-
-const statisticCtx = document.querySelector('.statistic__chart');
 
 const renderStatisticsBar = (films, statisticsCtx) => {
   const BAR_HEIGHT = CHART_BAR.HEIGHT;
@@ -86,8 +83,9 @@ return new Chart(statisticsCtx, {
 }
 
 const createStatisticTemplate = (currentFilter, films) => {
-  const totalDuration = convertMinutesToHours(getTotalDuration(films));
-  const topGenre = getTopGenre(films);
+    const watchedFilms = filterToFilterMap[currentFilter](films);
+  const totalDuration = convertMinutesToHours(getTotalDuration(watchedFilms));
+  const topGenre = getTopGenre(watchedFilms);
     return `<section class="statistic">
     <p class="statistic__rank">
       Your rank
@@ -102,7 +100,7 @@ const createStatisticTemplate = (currentFilter, films) => {
       ${currentFilter === StatsDate.ALL_TIME.type ? 'checked' : ''}>
       <label for="statistic-all-time" class="statistic__filters-label">${StatsDate.ALL_TIME.name}</label>
 
-      <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-today" value="${StatsDate.TODAY.type} ${currentFilter === StatsDate.TODAY.type ? 'checked' : ''}">
+      <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-today" value="${StatsDate.TODAY.type}" ${currentFilter === StatsDate.TODAY.type ? 'checked' : ''}">
       <label for="statistic-today" class="statistic__filters-label">${StatsDate.TODAY.name}</label>
 
       <input type="radio" class="statistic__filters-input visually-hidden" name="statistic-filter" id="statistic-week" value="${StatsDate.WEEK.type}" ${currentFilter === StatsDate.WEEK.type? 'checked' : ''}>
@@ -118,7 +116,7 @@ const createStatisticTemplate = (currentFilter, films) => {
     <ul class="statistic__text-list">
       <li class="statistic__text-item">
         <h4 class="statistic__item-title">You watched</h4>
-        <p class="statistic__item-text">${films.length} <span class="statistic__item-description">movies</span></p>
+        <p class="statistic__item-text">${watchedFilms.length} <span class="statistic__item-description">movies</span></p>
       </li>
       <li class="statistic__text-item">
         <h4 class="statistic__item-title">Total duration</h4>

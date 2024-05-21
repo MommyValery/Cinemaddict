@@ -62,8 +62,8 @@ export const getGenresStatistics = (films) => {
 
 
 
-export const getTopGenre = (films) => {
-    const genres = getGenresStatistics(films);
+export const getTopGenre = (films, filter) => {
+ const genres = getGenresStatistics(films);
   const values =  Object.values(genres);
     const max = Math.max(...values);
     for (let key in genres) {

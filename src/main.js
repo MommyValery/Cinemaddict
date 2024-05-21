@@ -8,8 +8,11 @@ import ProfilePresenter from './presenter/profile.js';
 import Api from './api.js';
 import { UpdateType } from './const.js';
 
-const END_POINT = 'https://17.ecmascript.htmlacademy.pro/cinemaddict';
-const AUTHORIZATION = 'Basic er883jdzbdw';
+// кнопки фаворит итд не работают
+//невозможно отправить комент
+// не обновляется количество коментов после удаления
+const END_POINT = 'https://17.ecmascript.htmlacademy.pro/cinemaddict/';
+const AUTHORIZATION = 'Basic jkihloij;oi333';
 
 const filmsModel = new FilmsModel();
 const filterModel = new FilterModel();
