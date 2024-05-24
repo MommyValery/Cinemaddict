@@ -51,10 +51,8 @@ export default class Card extends Smart {
     this._setFavoriteHandler = this._setFavoriteHandler.bind(this);
     this._setWatchedHandler = this._setWatchedHandler.bind(this);
     this._setWatchlistHandler = this._setWatchlistHandler.bind(this);
-
-    // this._toggleActiveClass = this._toggleActiveClass.bind(this);
-    
   }
+  
   getTemplate() {
     return createFilmCardTemplate(this._film);
   }
@@ -75,7 +73,7 @@ export default class Card extends Smart {
   _setWatchlistHandler(evt) {
     evt.preventDefault();
     this._callback.watchlistClick();
-}
+  }
 
   setWatchlistHandler(callback) {
     this._callback.watchlistClick = callback;
@@ -104,5 +102,4 @@ export default class Card extends Smart {
     this.getElement().querySelector('.film-card__controls-item--favorite').addEventListener('click', this._setFavoriteHandler); 
   }
   
-  }
-  
+}

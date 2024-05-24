@@ -1,27 +1,24 @@
 import { render, RenderPosition } from '../utils/render.js';
-import Abstract from './abstract.js';
 import Smart from './smart.js';
-import he from 'he';
 import { humanizeDate, convertMinutesToHours } from '../utils/card.js';
-import dayjs from 'dayjs';
 import { ErrorMessage } from '../const.js';
 
 const createCommentsTemplate = (filmComments) => {
   let template = '';
   filmComments.forEach(({ author, comment, date, emotion, id }) => {
-  template += `<li class="film-details__comment">
-  <span class="film-details__comment-emoji">
-  <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
-  </span>
-    <div>
-      <p class="film-details__comment-text">${comment}</p>
-      <p class="film-details__comment-info">
-        <span class="film-details__comment-author">${author}</span>
-        <span class="film-details__comment-day">${humanizeDate(date, 'YYYY/MM/D HH:MM')}</span>
-        <button class="film-details__comment-delete" data-comment-id="${id}">Delete</button>
-      </p>
-    </div>
-  </li>`;
+    template += `<li class="film-details__comment">
+                  <span class="film-details__comment-emoji">
+                    <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
+                  </span>
+                  <div>
+                    <p class="film-details__comment-text">${comment}</p>
+                    <p class="film-details__comment-info">
+                      <span class="film-details__comment-author">${author}</span>
+                      <span class="film-details__comment-day">${humanizeDate(date, 'YYYY/MM/D HH:MM')}</span>
+                      <button class="film-details__comment-delete" data-comment-id="${id}">Delete</button>
+                    </p>
+                  </div>
+                </li>`;
   });
   return template;
 };
@@ -35,20 +32,18 @@ const createPopupTemplate = (film, filmComments) => {
   const currentComments = createCommentsTemplate(filmComments);
   const filmDuration = convertMinutesToHours(runtime).hours + 'h ' + convertMinutesToHours(runtime).minutes + 'm';
   return `<section class="film-details">
-  <form class="film-details__inner" action="" method="get">
-  <div class="film-details__top-container">
-  <div class="film-details__close">
-          <button class="film-details__close-btn" type="button">close</button>
+    <form class="film-details__inner" action="" method="get">
+      <div class="film-details__top-container">
+      <div class="film-details__close">
+        <button class="film-details__close-btn" type="button">close</button>
+      </div>
+      <div class="film-details__info-wrap">
+        <div class="film-details__poster">
+          <img class="film-details__poster-img" src="${poster}" alt="">
+          <p class="film-details__age">${ageRating}+</p>
         </div>
-        <div class="film-details__info-wrap">
-          <div class="film-details__poster">
-            <img class="film-details__poster-img" src="${poster}" alt="">
-  
-            <p class="film-details__age">${ageRating}+</p>
-          </div>
-  
-          <div class="film-details__info">
-            <div class="film-details__info-head">
+        <div class="film-details__info">
+          <div class="film-details__info-head">
               <div class="film-details__title-wrap">
                 <h3 class="film-details__title">${title}</h3>
                 <p class="film-details__title-original">Original: ${alternativeTitle}</p>
@@ -57,7 +52,7 @@ const createPopupTemplate = (film, filmComments) => {
               <div class="film-details__rating">
                 <p class="film-details__total-rating">${rating}</p>
               </div>
-            </div>
+          </div>
   
             <table class="film-details__table">
               <tr class="film-details__row">
@@ -106,9 +101,7 @@ const createPopupTemplate = (film, filmComments) => {
       <div class="film-details__bottom-container">
         <section class="film-details__comments-wrap">
           <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${filmComments.length}</span></h3>
-          <ul class="film-details__comments-list">
-          ${currentComments}
-          </ul>
+          <ul class="film-details__comments-list">${currentComments}</ul>
           <div class="film-details__new-comment">
             <div class="film-details__add-emoji-label"></div>
   
@@ -170,7 +163,6 @@ export default class Popup extends Smart {
 
 
   _setInnerHandlers() {
-
     this.getElement().querySelector('.film-details__comment-input').addEventListener('input', this._setCommentInputHandler);
     this.getElement().querySelector('.film-details__emoji-list').addEventListener('change', this._checkEmojiHandler);
   }
@@ -187,51 +179,48 @@ export default class Popup extends Smart {
   }
   
   restoreHandlers() {
-      this.setCloseWindowHandler(this._callback.closeWindow);
-     this.setWatchedHandler(this._callback.watchedClick);
-      this.setFavoriteHandler(this._callback.favoriteClick);
-      this.setWatchlistHandler(this._callback.watchlistClick);
-      this.setDeleteButtonClickHandler(this._callback.deleteButtonClick);
-      this.setCommentSubmitHandler(this._callback.commentSubmit);
+    this.setCloseWindowHandler(this._callback.closeWindow);
+    this.setWatchedHandler(this._callback.watchedClick);
+    this.setFavoriteHandler(this._callback.favoriteClick);
+    this.setWatchlistHandler(this._callback.watchlistClick);
+    this.setDeleteButtonClickHandler(this._callback.deleteButtonClick);
+    this.setCommentSubmitHandler(this._callback.commentSubmit);
   }
   
   _setWatchlistHandler(evt) {
-      evt.preventDefault();
-      console.log("_setWatchlistPopupHandler");
-      this._callback.watchlistClick();
+    evt.preventDefault();
+    this._callback.watchlistClick();
   }
   
   setWatchlistHandler(callback) {
-      this._callback.watchlistClick = callback;
-      this.getElement()
-        .querySelector('#watchlist')
-        .addEventListener('click', this._setWatchlistHandler);
+    this._callback.watchlistClick = callback;
+    this.getElement()
+      .querySelector('#watchlist')
+      .addEventListener('click', this._setWatchlistHandler);
   }
   
   _setWatchedHandler(evt) {
     evt.preventDefault();
-    console.log("_setWatchedPopupHandler");
     this._callback.watchedClick();
   }
     
   setWatchedHandler(callback) {
-        this._callback.watchedClick = callback;
-        this.getElement()
-          .querySelector('#watched')
-          .addEventListener('click', this._setWatchedHandler);
+    this._callback.watchedClick = callback;
+    this.getElement()
+      .querySelector('#watched')
+      .addEventListener('click', this._setWatchedHandler);
   }
       
   _setFavoriteHandler(evt) {
-        evt.preventDefault()
-        console.log("_setFavoritePopupHandler");
-        this._callback.favoriteClick();
+    evt.preventDefault()
+    this._callback.favoriteClick();
   }
       
   setFavoriteHandler(callback) {
-        this._callback.favoriteClick = callback;
-        this.getElement()
-        .querySelector('#favorite')
-        .addEventListener('click', this._setFavoriteHandler);
+    this._callback.favoriteClick = callback;
+    this.getElement()
+      .querySelector('#favorite')
+      .addEventListener('click', this._setFavoriteHandler);
   }
       
   _setCommentSubmitHandler(evt) {
@@ -268,10 +257,10 @@ export default class Popup extends Smart {
   }
 
   _setCommentInputHandler (evt) {
-      evt.preventDefault();
-      this.updateData({
-        comment: evt.target.value,
-      }, true);
+    evt.preventDefault();
+    this.updateData({
+      comment: evt.target.value,
+    }, true);
   }
 
   _checkEmojiHandler() {
@@ -320,4 +309,3 @@ export default class Popup extends Smart {
   }
 
 }
-  

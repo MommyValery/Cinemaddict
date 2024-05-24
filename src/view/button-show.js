@@ -1,7 +1,7 @@
 import Abstract from "./abstract.js";
 
 const createButtonShowTemplate = () => {
-    return `<button class="films-list__show-more">Show more</button>`
+  return `<button class="films-list__show-more">Show more</button>`
 }
 
 export default class ButtonShow extends Abstract {
@@ -11,7 +11,7 @@ export default class ButtonShow extends Abstract {
   }
 
   getTemplate() {
-      return createButtonShowTemplate();
+    return createButtonShowTemplate();
   }
   
   _clickHandler(evt) {
@@ -24,5 +24,5 @@ export default class ButtonShow extends Abstract {
     this.getElement().addEventListener('click', this._clickHandler);
   }
   
-  }
+}
   

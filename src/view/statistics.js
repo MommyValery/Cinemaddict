@@ -8,82 +8,79 @@ import { convertMinutesToHours } from "../utils/card.js";
 
 const renderStatisticsBar = (films, statisticsCtx) => {
   const BAR_HEIGHT = CHART_BAR.HEIGHT;
-
-const genresNames = [];
-const genresCounts = [];
+  const genresNames = [];
+  const genresCounts = [];
   
-Object
-.entries(getGenresStatistics(films))
-.sort((a, b) => b[1] - a[1])
-.forEach(([name, count]) => {
-  genresNames.push(name);
-  genresCounts.push(count);
-});
+  Object
+    .entries(getGenresStatistics(films))
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([name, count]) => {
+      genresNames.push(name);
+      genresCounts.push(count);
+    });
 
   statisticsCtx.height = BAR_HEIGHT * Object.values(genresNames).length;
-  
 
-return new Chart(statisticsCtx, {
-  plugins: [ChartDataLabels],
-  type: CHART_BAR.TYPE,
-  data: {
-    labels: genresNames,
-    datasets: [{
-      data: genresCounts,
-      backgroundColor: CHART_BAR.BG_COLOR,
-      hoverBackgroundColor: CHART_BAR.BG_COLOR,
-      anchor: CHART_BAR.LABEL_ALIGN,
-      barThickness: CHART_BAR.THICKNESS,
-    }],
-  },
-  options: {
-    plugins: {
-      datalabels: {
-        font: {
-          size: CHART_BAR.FONT_SIZE,
-        },
+  return new Chart(statisticsCtx, {
+    plugins: [ChartDataLabels],
+    type: CHART_BAR.TYPE,
+    data: {
+      labels: genresNames,
+      datasets: [{
+        data: genresCounts,
+        backgroundColor: CHART_BAR.BG_COLOR,
+        hoverBackgroundColor: CHART_BAR.BG_COLOR,
+        anchor: CHART_BAR.LABEL_ALIGN,
+        barThickness: CHART_BAR.THICKNESS,
+      }],
+    },
+    options: {
+      plugins: {
+        datalabels: {
+          font: {
+            size: CHART_BAR.FONT_SIZE,
+          },
         color: CHART_BAR.FONT_COLOR,
         anchor: CHART_BAR.LABEL_ALIGN,
         align: CHART_BAR.LABEL_ALIGN,
         offset: CHART_BAR.LABEL_OFFSET,
+        },
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            fontColor: CHART_BAR.FONT_COLOR,
+            padding: CHART_BAR.PADDING,
+            fontSize: CHART_BAR.FONT_SIZE,
+          },
+          gridLines: {
+          display: false,
+          drawBorder: false,
+          },
+        }],
+        xAxes: [{
+          ticks: {
+            display: false,
+            beginAtZero: true,
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false,
+          },
+        }],
+      },
+      legend: {
+        display: false,
+      },
+      tooltips: {
+        enabled: false,
       },
     },
-    scales: {
-      yAxes: [{
-        ticks: {
-          fontColor: CHART_BAR.FONT_COLOR,
-          padding: CHART_BAR.PADDING,
-          fontSize: CHART_BAR.FONT_SIZE,
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false,
-        },
-      }],
-      xAxes: [{
-        ticks: {
-          display: false,
-          beginAtZero: true,
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false,
-        },
-      }],
-    },
-    legend: {
-      display: false,
-    },
-    tooltips: {
-      enabled: false,
-    },
-  },
-});
-  
+}); 
 }
 
 const createStatisticTemplate = (currentFilter, films) => {
-    const watchedFilms = filterToFilterMap[currentFilter](films);
+  const watchedFilms = filterToFilterMap[currentFilter](films);
   const totalDuration = convertMinutesToHours(getTotalDuration(watchedFilms));
   const topGenre = getTopGenre(watchedFilms);
     return `<section class="statistic">
@@ -136,22 +133,22 @@ const createStatisticTemplate = (currentFilter, films) => {
 };
 
 export default class Statistics extends Smart {
-    constructor(films) {
-      super();
+  constructor(films) {
+    super();
 
-      this._films = films;
-      this._watchedFilms = this._films.filter((film) => film.userDetails.isWatched);
-      this._currentFilter = StatsDate.ALL_TIME.type;
-      this._chart = null;
-      this._film = filterToFilterMap[this._currentFilter](this._watchedFilms);
+    this._films = films;
+    this._watchedFilms = this._films.filter((film) => film.userDetails.isWatched);
+    this._currentFilter = StatsDate.ALL_TIME.type;
+    this._chart = null;
+    this._film = filterToFilterMap[this._currentFilter](this._watchedFilms);
 
-      this._filterStatsClickHandler = this._filterStatsClickHandler.bind(this);
-      this._setFilterStatsClickHandler();
-      this._setChart();
-    }
+    this._filterStatsClickHandler = this._filterStatsClickHandler.bind(this);
+    this._setFilterStatsClickHandler();
+    this._setChart();
+  }
 
   getTemplate() {
-        return createStatisticTemplate(this._currentFilter, this._watchedFilms);
+    return createStatisticTemplate(this._currentFilter, this._watchedFilms);
   }
   
   restoreHandlers() {
@@ -182,8 +179,6 @@ export default class Statistics extends Smart {
     }
 
     const statisticsCtx = this.getElement().querySelector('.statistic__chart');
-
     this._chart = renderStatisticsBar(this._film, statisticsCtx);
   }
-
-  }
+}

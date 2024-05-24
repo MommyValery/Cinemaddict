@@ -1,9 +1,9 @@
 import Abstract from "./abstract.js";
 
 const createStatisticsTemplate = (filmsCount) => {
-    return `<section class="footer__statistics">
-    <p>${filmsCount} movies inside</p>
-  </section>`;
+  return `<section class="footer__statistics">
+            <p>${filmsCount} movies inside</p>
+          </section>`;
 }
 
 

@@ -11,7 +11,7 @@ export const convertMinutesToHours = (minutes) => {
   return {
     hours: Math.floor(minutes / 60),
     minutes: minutes % 60
- }
+  }
 }  
 
 const getWeightForNull = (a, b) => {
@@ -34,31 +34,29 @@ export const sortFilmDateDown = (a, b) => {
   const first = humanizeDate(a.filmInfo.release.date, 'YYYY');
   const second = humanizeDate(b.filmInfo.release.date, 'YYYY');
   const weight = getWeightForNull(first, second);
-  
     if (weight !== null) {
-        return weight;
+      return weight;
     };
-
-    return dayjs(second).diff(dayjs(first));
+  return dayjs(second).diff(dayjs(first));
 };
   
 export const sortFilmRatingDown = (a, b) => {
   const weight = getWeightForNull(a.filmInfo.rating, b.filmInfo.rating);
 
     if (weight !== null) {
-        return weight;
+      return weight;
     };
       
-    return b.filmInfo.rating - a.filmInfo.rating;
+  return b.filmInfo.rating - a.filmInfo.rating;
   };
 
 export const sortFilmDefault = (a, b) => {
-    const weight = getWeightForNull(a.filmInfo.rating, b.filmInfo.rating);
+  const weight = getWeightForNull(a.filmInfo.rating, b.filmInfo.rating);
   
-      if (weight !== null) {
-          return weight;
-      };
+  if (weight !== null) {
+    return weight;
+  };
         
-      return a.id - b.id;
-    };
+  return a.id - b.id;
   
+};

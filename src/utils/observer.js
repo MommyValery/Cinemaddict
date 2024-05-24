@@ -1,17 +1,17 @@
 export default class Observer {
-    constructor() {
-        this._observers = [];
-    }
-    
-    addObserver(callback) {
-        this._observers.push(callback);
-    }
+  constructor() {
+    this._observers = [];
+  }
 
-    removeObserver(callback) {
-        this._observers.filter((existedCallback) => existedCallback !== callback);
-    }
+  addObserver(callback) {
+    this._observers.push(callback);
+  }
 
-    _notify(event, payload) {
-        this._observers.forEach((callback) => callback(event, payload));
-    }
+  removeObserver(callback) {
+    this._observers.filter((existedCallback) => existedCallback !== callback);
+  }
+
+  _notify(event, payload) {
+    this._observers.forEach((callback) => callback(event, payload));
+  }
 }

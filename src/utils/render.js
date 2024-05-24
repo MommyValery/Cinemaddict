@@ -1,9 +1,9 @@
 import Abstract from "../view/abstract";
 
 export const RenderPosition = {
-    AFTERBEGIN: 'afterbegin',
-    BEFOREEND: 'beforeend',
-  };
+  AFTERBEGIN: 'afterbegin',
+  BEFOREEND: 'beforeend',
+};
   
 export const render = (container, element, place) => {
   if (container instanceof Abstract) {
@@ -12,24 +12,24 @@ export const render = (container, element, place) => {
   if (element instanceof Abstract) {
     element = element.getElement();
   }
-    switch (place) {
-      case RenderPosition.AFTERBEGIN:
-        container.prepend(element);
-        break;
-      case RenderPosition.BEFOREEND:
-        container.append(element);
-        break;
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
     }
-  };
+};
 
 export const renderTemplate = (container, template, place = 'beforeend') => {
-    container.insertAdjacentHTML(place, template);
+  container.insertAdjacentHTML(place, template);
 };
   
 export const returnElement = (template) => {
-    const newElement = document.createElement('div'); 
-    newElement.innerHTML = template; 
-    return newElement.firstChild;
+  const newElement = document.createElement('div'); 
+  newElement.innerHTML = template; 
+  return newElement.firstChild;
 }
 
 

@@ -4,7 +4,7 @@ import { SortType } from "../const.js";
 
 
 const createSortTemplate = (currentSortType) => {
-    return `<ul class="sort">
+  return `<ul class="sort">
     <li><a href="#" data-sort-type="${SortType.DEFAULT}" class="sort__button ${currentSortType === SortType.DEFAULT? 'sort__button--active' : ''} ">Sort by default</a></li>
     <li><a href="#" data-sort-type="${SortType.DATE_DOWN}" class="sort__button ${currentSortType === SortType.DATE_UP || currentSortType === SortType.DATE_DOWN ? 'sort__button--active' : ''}">Sort by date</a></li>
     <li><a href="#" data-sort-type="${SortType.RATING_DOWN}" class="sort__button  ${currentSortType === SortType.RATING_UP || currentSortType === SortType.RATING_DOWN ? 'sort__button--active' : ''}">Sort by rating</a></li>
@@ -36,6 +36,4 @@ export default class Sort extends Abstract {
     this._callback.sortTypeChange = callback;
     this.getElement().addEventListener('click', this._sortTypeChangeHandler)
   }
-
-
 }
